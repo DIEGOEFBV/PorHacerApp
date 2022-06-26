@@ -7,6 +7,8 @@ import com.empresa.porhacer.service.dto.TaskInDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TaskService {
     //El servicio se conecta al repositorio y el repositorio a la base de datos
@@ -28,6 +30,10 @@ public class TaskService {
         return this.repository.save(task);
     }
 
+    //Nos permite obtener todas las tareas
+    public List<Task> findTasks(){
+        return this.repository.findAll();
+    }
 
 
 }
