@@ -19,8 +19,9 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     //que está en el value se va ejecutar de manera nativa eso significa que se va ejecutar en dependencia de la base
     //datos que estamos utilizando.
 
-    @Query(value = "UPDATE TASK SET FINISHED=true WHERE ID:id;", nativeQuery = true)
+    @Query(value = "UPDATE TASK SET FINISHED=true WHERE ID=:id", nativeQuery = true)
     public void markTaskAsFinished(@Param("id")Long id);
+
 
 
 }

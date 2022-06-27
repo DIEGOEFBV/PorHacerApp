@@ -1,14 +1,19 @@
 package com.empresa.porhacer.service;
 
+import com.empresa.porhacer.exceptions.PorHacerExceptions;
 import com.empresa.porhacer.mapper.TaskInDtoToTask;
 import com.empresa.porhacer.persistence.entity.Task;
 import com.empresa.porhacer.persistence.entity.TaskStatus;
 import com.empresa.porhacer.persistence.repository.TaskRepository;
 import com.empresa.porhacer.service.dto.TaskInDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.awt.print.PrinterException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -40,7 +45,23 @@ public class TaskService {
         return this.repository.findAllByTaskStatus(status);
     }
 
-    public void updateTaskAsFinished(Long id){
+    @Transactional
+    public void updateTaskAsFinished(Long id) {
+        Optional<Task> optionalTask = this.repository.findById(id);
+        if (optionalTask.isEmpty()) {
+            throw new PorHacerExceptions("TAREA NO ENCONTRADA", HttpStatus.NOT_FOUND);
+        }
         this.repository.markTaskAsFinished(id);
     }
+
+//    public void deleteById(Long id) {
+//        Optional<Task> optionalTask = this.repository.findById(id);
+//        if (optionalTask.isEmpty()) {
+//            throw new ToDoExceptions("Task not found", HttpStatus.NOT_FOUND);
+//        }
+//
+//        this.repository.deleteById(id);
+//    }
+
+
 }
