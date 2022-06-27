@@ -32,13 +32,19 @@ public class TaskController {
 
     @GetMapping("/status/{status}")
     //con PathVariable leemos una variable que está el el path de la url
-    public List<Task> findAllByStatus(@PathVariable("status")TaskStatus status){
+    public List<Task> findAllByStatus(@PathVariable("status") TaskStatus status) {
         return this.taskService.findAllByTaskStatus(status);
     }
 
     @PatchMapping("/mark_as_finished/{id}")
-    public ResponseEntity<Void> markAsFinished(@PathVariable("id") Long id){
+    public ResponseEntity<Void> markAsFinished(@PathVariable("id") Long id) {
         this.taskService.updateTaskAsFinished(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+        this.taskService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 

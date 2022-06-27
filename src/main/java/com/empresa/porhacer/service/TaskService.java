@@ -54,14 +54,17 @@ public class TaskService {
         this.repository.markTaskAsFinished(id);
     }
 
-//    public void deleteById(Long id) {
-//        Optional<Task> optionalTask = this.repository.findById(id);
-//        if (optionalTask.isEmpty()) {
-//            throw new ToDoExceptions("Task not found", HttpStatus.NOT_FOUND);
-//        }
-//
+    public void deleteById(Long id) {
+        Optional<Task> optionalTask = this.repository.findById(id);
+        if (optionalTask.isEmpty()) {
+            throw new PorHacerExceptions("TAREA NO ENCONTRADA", HttpStatus.NOT_FOUND);
+        }else{
+            this.repository.deleteById(id);
+            throw new PorHacerExceptions("TAREA ELIMINADA", HttpStatus.OK);
+        }
+
 //        this.repository.deleteById(id);
-//    }
+    }
 
 
 }
